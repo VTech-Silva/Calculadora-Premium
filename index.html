@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f6f7fb" />
+  <title>Calculadora Premium™</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #f6f7fb;
+      --surface: #ffffff;
+      --surface-2: #f2f4f8;
+      --text: #171a21;
+      --muted: #727987;
+      --border: #e4e7ec;
+      --primary: #6c5ce7;
+      --primary-dark: #5646cf;
+      --success: #16a36a;
+      --danger: #e5484d;
+      --shadow: 0 20px 60px rgba(20, 24, 40, 0.12);
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, rgba(108,92,231,.10), transparent 35%),
+        radial-gradient(circle at bottom right, rgba(22,163,106,.08), transparent 35%),
+        var(--bg);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      color: var(--text);
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      width: min(1100px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 24px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      font-weight: 800;
+      font-size: 18px;
+    }
+
+    .brand-icon {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 8px 20px rgba(108,92,231,.25);
+    }
+
+    .premium-badge {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      color: var(--primary);
+      background: rgba(108,92,231,.10);
+      padding: 7px 9px;
+      border-radius: 999px;
+    }
+
+    main {
+      flex: 1;
+      width: min(1100px, calc(100% - 32px));
+      margin: auto;
+      display: grid;
+      place-items: center;
+      padding: 28px 0 60px;
+    }
+
+    .hero {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      align-items: center;
+      gap: 70px;
+    }
+
+    .intro h1 {
+      font-size: clamp(42px, 6vw, 72px);
+      line-height: .98;
+      letter-spacing: -.05em;
+      max-width: 650px;
+    }
+
+    .intro h1 span {
+      color: var(--primary);
+    }
+
+    .intro p {
+      margin-top: 24px;
+      max-width: 560px;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.65;
+    }
+
+    .features {
+      margin-top: 28px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .feature {
+      padding: 9px 13px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.7);
+      color: #505663;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .calculator {
+      width: 100%;
+      background: rgba(255,255,255,.92);
+      border: 1px solid rgba(255,255,255,.9);
+      border-radius: 28px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+    }
+
+    .calculator-top {
+      padding: 8px 6px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .free-plan {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--success);
+    }
+
+    .display {
+      min-height: 132px;
+      border-radius: 20px;
+      background: var(--surface-2);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+
+    .expression {
+      color: var(--muted);
+      min-height: 22px;
+      font-size: 15px;
+      word-break: break-all;
+      text-align: right;
+    }
+
+    .value {
+      margin-top: 8px;
+      width: 100%;
+      text-align: right;
+      font-size: 43px;
+      font-weight: 700;
+      letter-spacing: -.04em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .keyboard {
+      margin-top: 14px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .key {
+      height: 66px;
+      border: 0;
+      border-radius: 17px;
+      cursor: pointer;
+      background: #f5f6f8;
+      color: var(--text);
+      font-size: 19px;
+      font-weight: 650;
+      transition: .15s ease;
+    }
+
+    .key:hover {
+      transform: translateY(-2px);
+      background: #eceef2;
+    }
+
+    .key:active {
+      transform: translateY(0) scale(.97);
+    }
+
+    .key.operator {
+      color: var(--primary);
+      background: rgba(108,92,231,.09);
+    }
+
+    .key.equal {
+      color: white;
+      background: var(--primary);
+      box-shadow: 0 8px 20px rgba(108,92,231,.25);
+    }
+
+    .key.equal:hover {
+      background: var(--primary-dark);
+    }
+
+    .key.clear {
+      color: var(--danger);
+    }
+
+    footer {
+      text-align: center;
+      color: #9a9faa;
+      font-size: 12px;
+      padding: 20px 16px 30px;
+    }
+
+    /* PAYWALL */
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(17,20,28,.58);
+      backdrop-filter: blur(9px);
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s ease;
+    }
+
+    .overlay.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal {
+      position: relative;
+      width: min(920px, 100%);
+      max-height: 94vh;
+      overflow-y: auto;
+      background: white;
+      border-radius: 28px;
+      padding: 36px;
+      box-shadow: 0 35px 100px rgba(0,0,0,.28);
+      transform: translateY(15px) scale(.98);
+      transition: .2s ease;
+    }
+
+    .overlay.show .modal {
+      transform: translateY(0) scale(1);
+    }
+
+    .close {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: white;
+      cursor: pointer;
+      font-size: 19px;
+      color: var(--muted);
+    }
+
+    .lock {
+      width: 54px;
+      height: 54px;
+      margin: 0 auto 16px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: rgba(108,92,231,.10);
+      font-size: 25px;
+    }
+
+    .modal-head {
+      text-align: center;
+      padding: 0 30px;
+    }
+
+    .modal-head h2 {
+      font-size: 30px;
+      letter-spacing: -.03em;
+    }
+
+    .modal-head p {
+      margin: 10px auto 0;
+      color: var(--muted);
+      max-width: 600px;
+      line-height: 1.5;
+    }
+
+    .blur-result {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 8px 15px;
+      border-radius: 10px;
+      background: #f2f3f6;
+      filter: blur(5px);
+      user-select: none;
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    .plans {
+      margin-top: 30px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .plan {
+      position: relative;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      min-height: 310px;
+    }
+
+    .plan.popular {
+      border: 2px solid var(--primary);
+      box-shadow: 0 12px 35px rgba(108,92,231,.12);
+    }
+
+    .popular-tag {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      white-space: nowrap;
+      padding: 5px 10px;
+      border-radius: 999px;
+      color: white;
+      background: var(--primary);
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: .06em;
+    }
+
+    .plan h3 {
+      font-size: 18px;
+    }
+
+    .price {
+      margin: 12px 0 18px;
+      font-size: 30px;
+      font-weight: 800;
+      letter-spacing: -.04em;
+    }
+
+    .price span {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--muted);
+      letter-spacing: 0;
+    }
+
+    .plan ul {
+      list-style: none;
+      display: grid;
+      gap: 10px;
+      margin-bottom: 20px;
+      color: #565d69;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .plan li::before {
+      content: "✓";
+      color: var(--success);
+      font-weight: 900;
+      margin-right: 8px;
+    }
+
+    .subscribe {
+      margin-top: auto;
+      height: 45px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: white;
+      cursor: pointer;
+      font-weight: 750;
+      transition: .15s;
+    }
+
+    .subscribe:hover {
+      background: #f5f6f8;
+    }
+
+    .popular .subscribe {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: white;
+    }
+
+    .disclaimer {
+      margin-top: 24px;
+      text-align: center;
+      color: #9a9faa;
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    /* SECOND JOKE MODAL */
+
+    .joke-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(17,20,28,.65);
+      display: none;
+      place-items: center;
+      padding: 20px;
+    }
+
+    .joke-overlay.show {
+      display: grid;
+    }
+
+    .joke-box {
+      width: min(430px, 100%);
+      background: white;
+      border-radius: 24px;
+      padding: 32px;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    .joke-box .emoji {
+      font-size: 46px;
+    }
+
+    .joke-box h3 {
+      margin-top: 14px;
+      font-size: 24px;
+    }
+
+    .joke-box p {
+      color: var(--muted);
+      line-height: 1.6;
+      margin-top: 10px;
+    }
+
+    .joke-box button {
+      margin-top: 22px;
+      width: 100%;
+      height: 48px;
+      border: 0;
+      border-radius: 13px;
+      background: var(--primary);
+      color: white;
+      font-weight: 750;
+      cursor: pointer;
+    }
+
+    @media (max-width: 850px) {
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .intro {
+        text-align: center;
+      }
+
+      .intro p {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .features {
+        justify-content: center;
+      }
+
+      .calculator {
+        max-width: 430px;
+        margin: auto;
+      }
+
+      .plans {
+        grid-template-columns: 1fr;
+      }
+
+      .plan {
+        min-height: auto;
+      }
+    }
+
+    @media (max-width: 520px) {
+      header {
+        padding-top: 16px;
+      }
+
+      .intro h1 {
+        font-size: 42px;
+      }
+
+      .intro p {
+        font-size: 15px;
+      }
+
+      .calculator {
+        padding: 12px;
+        border-radius: 22px;
+      }
+
+      .display {
+        min-height: 110px;
+      }
+
+      .key {
+        height: 58px;
+        border-radius: 14px;
+      }
+
+      .modal {
+        padding: 30px 16px 22px;
+        border-radius: 22px;
+      }
+
+      .modal-head h2 {
+        font-size: 24px;
+      }
+
+      .modal-head {
+        padding: 0 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="page">
+
+  <header>
+    <div class="brand">
+      <div class="brand-icon">÷</div>
+      Calculadora Premium™
+    </div>
+
+    <div class="premium-badge">
+      FREE
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+
+      <div class="intro">
+        <h1>
+          Matemática.<br>
+          Agora por <span>assinatura.</span>
+        </h1>
+
+        <p>
+          A primeira calculadora criada para transformar operações
+          matemáticas simples em receita recorrente.
+        </p>
+
+        <div class="features">
+          <div class="feature">✓ Digitação grátis</div>
+          <div class="feature">✓ Interface premium</div>
+          <div class="feature">🔒 Resultado pago</div>
+        </div>
+      </div>
+
+      <div class="calculator">
+
+        <div class="calculator-top">
+          <span>Calculadora</span>
+
+          <div class="free-plan">
+            <span class="dot"></span>
+            Plano Gratuito
+          </div>
+        </div>
+
+        <div class="display">
+          <div class="expression" id="expression">
+            Digite uma operação
+          </div>
+
+          <div class="value" id="display">0</div>
+        </div>
+
+        <div class="keyboard">
+
+          <button class="key clear" data-action="clear">AC</button>
+          <button class="key" data-action="backspace">⌫</button>
+          <button class="key operator" data-value="%">%</button>
+          <button class="key operator" data-value="/">÷</button>
+
+          <button class="key" data-value="7">7</button>
+          <button class="key" data-value="8">8</button>
+          <button class="key" data-value="9">9</button>
+          <button class="key operator" data-value="*">×</button>
+
+          <button class="key" data-value="4">4</button>
+          <button class="key" data-value="5">5</button>
+          <button class="key" data-value="6">6</button>
+          <button class="key operator" data-value="-">−</button>
+
+          <button class="key" data-value="1">1</button>
+          <button class="key" data-value="2">2</button>
+          <button class="key" data-value="3">3</button>
+          <button class="key operator" data-value="+">+</button>
+
+          <button class="key" data-value="0">0</button>
+          <button class="key" data-value="00">00</button>
+          <button class="key" data-value=".">,</button>
+          <button class="key equal" data-action="calculate">=</button>
+
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <footer>
+    Calculadora Premium™ © 2026 — Projeto humorístico. Nenhuma cobrança é realizada.
+  </footer>
+
+</div>
+
+
+<!-- PAYWALL -->
+<div class="overlay" id="paywall">
+
+  <div class="modal">
+
+    <button class="close" id="closePaywall">×</button>
+
+    <div class="modal-head">
+
+      <div class="lock">🔒</div>
+
+      <h2>Seu resultado está pronto!</h2>
+
+      <p>
+        Encontramos a resposta para sua operação.
+        Faça upgrade para desbloquear o resultado.
+      </p>
+
+      <div class="blur-result" id="fakeResult">
+        123.456
+      </div>
+
+    </div>
+
+    <div class="plans">
+
+      <div class="plan">
+
+        <h3>Basic</h3>
+
+        <div class="price">
+          R$ 9,90
+          <span>/mês</span>
+        </div>
+
+        <ul>
+          <li>10 resultados por mês</li>
+          <li>Adição e subtração</li>
+          <li>Até 4 casas decimais</li>
+          <li>Anúncios premium</li>
+        </ul>
+
+        <button class="subscribe" data-plan="Basic">
+          Assinar Basic
+        </button>
+
+      </div>
+
+
+      <div class="plan popular">
+
+        <div class="popular-tag">
+          MAIS POPULAR
+        </div>
+
+        <h3>Pro</h3>
+
+        <div class="price">
+          R$ 29,90
+          <span>/mês</span>
+        </div>
+
+        <ul>
+          <li>Resultados ilimitados*</li>
+          <li>Multiplicação desbloqueada</li>
+          <li>Porcentagem profissional</li>
+          <li>Prioridade nos cálculos</li>
+        </ul>
+
+        <button class="subscribe" data-plan="Pro">
+          Assinar Pro
+        </button>
+
+      </div>
+
+
+      <div class="plan">
+
+        <h3>Business</h3>
+
+        <div class="price">
+          R$ 79,90
+          <span>/mês</span>
+        </div>
+
+        <ul>
+          <li>Divisão desbloqueada</li>
+          <li>Raiz quadrada</li>
+          <li>Modo escuro</li>
+          <li>Suporte matemático 24/7</li>
+        </ul>
+
+        <button class="subscribe" data-plan="Business">
+          Assinar Business
+        </button>
+
+      </div>
+
+    </div>
+
+    <div class="disclaimer">
+      * Uso justo de matemática se aplica.<br>
+      Projeto humorístico/paródia. Nenhum pagamento ou cobrança é processado.
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- SEGUNDA PIADA -->
+<div class="joke-overlay" id="jokeOverlay">
+
+  <div class="joke-box">
+
+    <div class="emoji">💳</div>
+
+    <h3>Excelente escolha!</h3>
+
+    <p id="jokeText">
+      Preparando sua assinatura...
+    </p>
+
+    <button id="jokeClose">
+      Continuar sem ficar rico
+    </button>
+
+  </div>
+
+</div>
+
+
+<script>
+
+  const display = document.getElementById("display");
+  const expressionText = document.getElementById("expression");
+
+  const paywall = document.getElementById("paywall");
+  const closePaywall = document.getElementById("closePaywall");
+
+  const fakeResult = document.getElementById("fakeResult");
+
+  const jokeOverlay = document.getElementById("jokeOverlay");
+  const jokeText = document.getElementById("jokeText");
+  const jokeClose = document.getElementById("jokeClose");
+
+  let expression = "";
+
+
+  function formatExpression(value) {
+
+    return value
+      .replace(/\*/g, " × ")
+      .replace(/\//g, " ÷ ")
+      .replace(/\+/g, " + ")
+      .replace(/-/g, " − ");
+
+  }
+
+
+  function updateDisplay() {
+
+    if (!expression) {
+
+      display.textContent = "0";
+      expressionText.textContent = "Digite uma operação";
+
+      return;
+
+    }
+
+    display.textContent = formatExpression(expression);
+    expressionText.textContent = "Operação em andamento";
+
+  }
+
+
+  function appendValue(value) {
+
+    expression += value;
+
+    updateDisplay();
+
+  }
+
+
+  function clearCalculator() {
+
+    expression = "";
+
+    updateDisplay();
+
+  }
+
+
+  function backspace() {
+
+    expression = expression.slice(0, -1);
+
+    updateDisplay();
+
+  }
+
+
+  function showPaywall() {
+
+    if (!expression.trim()) return;
+
+    /*
+      O resultado é calculado apenas para gerar o efeito
+      visual borrado.
+
+      Ele NÃO é exibido ao usuário.
+    */
+
+    let result = "42";
+
+    try {
+
+      const safeExpression = expression.replace(/%/g, "/100");
+
+      if (/^[0-9+\-*/().\s]+$/.test(safeExpression)) {
+
+        result = Function(
+          '"use strict"; return (' + safeExpression + ')'
+        )();
+
+      }
+
+    } catch (error) {
+
+      result = "ERRO";
+
+    }
+
+    fakeResult.textContent = result;
+
+    paywall.classList.add("show");
+
+    document.body.style.overflow = "hidden";
+
+  }
+
+
+  function hidePaywall() {
+
+    paywall.classList.remove("show");
+
+    document.body.style.overflow = "";
+
+  }
+
+
+  document.querySelectorAll(".key").forEach(button => {
+
+    button.addEventListener("click", () => {
+
+      const value = button.dataset.value;
+      const action = button.dataset.action;
+
+      if (value !== undefined) {
+
+        appendValue(value);
+
+      }
+
+      if (action === "clear") {
+
+        clearCalculator();
+
+      }
+
+      if (action === "backspace") {
+
+        backspace();
+
+      }
+
+      if (action === "calculate") {
+
+        showPaywall();
+
+      }
+
+    });
+
+  });
+
+
+  document.addEventListener("keydown", event => {
+
+    const allowedKeys =
+      "0123456789+-*/.%()";
+
+    if (allowedKeys.includes(event.key)) {
+
+      expression += event.key;
+
+      updateDisplay();
+
+    }
+
+    if (event.key === "Enter") {
+
+      event.preventDefault();
+
+      showPaywall();
+
+    }
+
+    if (event.key === "Backspace") {
+
+      backspace();
+
+    }
+
+    if (event.key === "Escape") {
+
+      hidePaywall();
+
+      jokeOverlay.classList.remove("show");
+
+    }
+
+  });
+
+
+  closePaywall.addEventListener("click", hidePaywall);
+
+
+  paywall.addEventListener("click", event => {
+
+    if (event.target === paywall) {
+
+      hidePaywall();
+
+    }
+
+  });
+
+
+  document.querySelectorAll(".subscribe").forEach(button => {
+
+    button.addEventListener("click", () => {
+
+      const plan = button.dataset.plan;
+
+      jokeText.innerHTML =
+        `Você escolheu o plano <strong>${plan}</strong>.<br><br>` +
+        `Infelizmente nosso sistema de pagamentos também exige uma assinatura premium.`;
+
+      jokeOverlay.classList.add("show");
+
+    });
+
+  });
+
+
+  jokeClose.addEventListener("click", () => {
+
+    jokeOverlay.classList.remove("show");
+
+  });
+
+</script>
+
+</body>
+</html>
