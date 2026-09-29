@@ -4,7 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#f6f7fb" />
-  <title>Calculadora Premium™</title>
+  <meta name="description" content="Calculadora online simples e rápida." />
+  <title>Calculadora Online</title>
 
   <style>
     * {
@@ -18,24 +19,28 @@
       --surface: #ffffff;
       --surface-2: #f2f4f8;
       --text: #171a21;
-      --muted: #727987;
+      --muted: #747b88;
       --border: #e4e7ec;
-      --primary: #6c5ce7;
-      --primary-dark: #5646cf;
+      --primary: #635bff;
+      --primary-dark: #5048dc;
       --success: #16a36a;
       --danger: #e5484d;
-      --shadow: 0 20px 60px rgba(20, 24, 40, 0.12);
+      --shadow: 0 24px 70px rgba(20, 24, 40, 0.13);
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
       min-height: 100vh;
-      background:
-        radial-gradient(circle at top left, rgba(108,92,231,.10), transparent 35%),
-        radial-gradient(circle at bottom right, rgba(22,163,106,.08), transparent 35%),
-        var(--bg);
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-        "Segoe UI", sans-serif;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system,
+        BlinkMacSystemFont, "Segoe UI", sans-serif;
       color: var(--text);
+      background:
+        radial-gradient(circle at 10% 10%, rgba(99,91,255,.08), transparent 30%),
+        radial-gradient(circle at 90% 90%, rgba(22,163,106,.06), transparent 30%),
+        var(--bg);
     }
 
     button {
@@ -48,67 +53,77 @@
       flex-direction: column;
     }
 
+    /* HEADER */
+
     header {
-      width: min(1100px, calc(100% - 32px));
+      width: min(1120px, calc(100% - 32px));
       margin: 0 auto;
       padding: 24px 0;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 16px;
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 11px;
-      font-weight: 800;
+      gap: 12px;
       font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
     }
 
     .brand-icon {
-      width: 38px;
-      height: 38px;
+      width: 40px;
+      height: 40px;
       display: grid;
       place-items: center;
-      border-radius: 12px;
+      border-radius: 13px;
+      color: #fff;
       background: var(--primary);
-      color: white;
-      box-shadow: 0 8px 20px rgba(108,92,231,.25);
+      box-shadow: 0 8px 24px rgba(99,91,255,.25);
+      font-size: 21px;
     }
 
-    .premium-badge {
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: .08em;
-      color: var(--primary);
-      background: rgba(108,92,231,.10);
-      padding: 7px 9px;
-      border-radius: 999px;
+    .header-status {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: var(--muted);
+      font-size: 13px;
     }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--success);
+    }
+
+    /* MAIN */
 
     main {
       flex: 1;
-      width: min(1100px, calc(100% - 32px));
+      width: min(1120px, calc(100% - 32px));
       margin: auto;
       display: grid;
       place-items: center;
-      padding: 28px 0 60px;
+      padding: 30px 0 70px;
     }
 
     .hero {
       width: 100%;
       display: grid;
-      grid-template-columns: 1fr 420px;
+      grid-template-columns: minmax(0, 1fr) 430px;
+      gap: 80px;
       align-items: center;
-      gap: 70px;
     }
 
     .intro h1 {
-      font-size: clamp(42px, 6vw, 72px);
+      font-size: clamp(48px, 7vw, 78px);
       line-height: .98;
-      letter-spacing: -.05em;
-      max-width: 650px;
+      letter-spacing: -.055em;
+      font-weight: 850;
     }
 
     .intro h1 span {
@@ -116,11 +131,11 @@
     }
 
     .intro p {
-      margin-top: 24px;
-      max-width: 560px;
+      max-width: 540px;
+      margin-top: 25px;
       color: var(--muted);
       font-size: 18px;
-      line-height: 1.65;
+      line-height: 1.7;
     }
 
     .features {
@@ -131,27 +146,29 @@
     }
 
     .feature {
-      padding: 9px 13px;
-      border-radius: 999px;
+      padding: 9px 14px;
       border: 1px solid var(--border);
+      border-radius: 999px;
       background: rgba(255,255,255,.7);
-      color: #505663;
+      color: #545b68;
       font-size: 13px;
-      font-weight: 600;
+      font-weight: 650;
     }
+
+    /* CALCULATOR */
 
     .calculator {
       width: 100%;
-      background: rgba(255,255,255,.92);
+      background: rgba(255,255,255,.94);
       border: 1px solid rgba(255,255,255,.9);
-      border-radius: 28px;
+      border-radius: 29px;
       padding: 18px;
       box-shadow: var(--shadow);
       backdrop-filter: blur(16px);
     }
 
     .calculator-top {
-      padding: 8px 6px 18px;
+      padding: 7px 7px 18px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -159,45 +176,51 @@
       font-size: 12px;
     }
 
-    .free-plan {
-      display: flex;
-      align-items: center;
-      gap: 7px;
+    .calculator-top strong {
+      color: #4c5260;
+      font-weight: 700;
     }
 
-    .dot {
-      width: 8px;
-      height: 8px;
+    .ready {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .ready::before {
+      content: "";
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
       background: var(--success);
     }
 
     .display {
-      min-height: 132px;
-      border-radius: 20px;
-      background: var(--surface-2);
-      padding: 20px;
+      min-height: 138px;
+      padding: 22px;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
       align-items: flex-end;
+      border-radius: 21px;
+      background: var(--surface-2);
       overflow: hidden;
     }
 
-    .expression {
-      color: var(--muted);
-      min-height: 22px;
-      font-size: 15px;
-      word-break: break-all;
+    .expression-label {
+      width: 100%;
+      min-height: 21px;
       text-align: right;
+      color: var(--muted);
+      font-size: 14px;
     }
 
-    .value {
-      margin-top: 8px;
+    .display-value {
       width: 100%;
+      margin-top: 8px;
       text-align: right;
       font-size: 43px;
-      font-weight: 700;
+      font-weight: 750;
       letter-spacing: -.04em;
       white-space: nowrap;
       overflow: hidden;
@@ -212,50 +235,59 @@
     }
 
     .key {
-      height: 66px;
+      height: 67px;
       border: 0;
       border-radius: 17px;
       cursor: pointer;
-      background: #f5f6f8;
       color: var(--text);
+      background: #f5f6f8;
       font-size: 19px;
       font-weight: 650;
-      transition: .15s ease;
+      transition:
+        transform .13s ease,
+        background .13s ease,
+        box-shadow .13s ease;
     }
 
     .key:hover {
-      transform: translateY(-2px);
       background: #eceef2;
+      transform: translateY(-2px);
     }
 
     .key:active {
-      transform: translateY(0) scale(.97);
+      transform: scale(.96);
     }
 
     .key.operator {
       color: var(--primary);
-      background: rgba(108,92,231,.09);
+      background: rgba(99,91,255,.09);
     }
 
-    .key.equal {
-      color: white;
-      background: var(--primary);
-      box-shadow: 0 8px 20px rgba(108,92,231,.25);
-    }
-
-    .key.equal:hover {
-      background: var(--primary-dark);
+    .key.operator:hover {
+      background: rgba(99,91,255,.14);
     }
 
     .key.clear {
       color: var(--danger);
     }
 
+    .key.equal {
+      color: #fff;
+      background: var(--primary);
+      box-shadow: 0 9px 22px rgba(99,91,255,.24);
+    }
+
+    .key.equal:hover {
+      background: var(--primary-dark);
+    }
+
+    /* FOOTER */
+
     footer {
+      padding: 20px 16px 28px;
       text-align: center;
-      color: #9a9faa;
-      font-size: 12px;
-      padding: 20px 16px 30px;
+      color: #a0a5af;
+      font-size: 11px;
     }
 
     /* PAYWALL */
@@ -263,33 +295,40 @@
     .overlay {
       position: fixed;
       inset: 0;
-      background: rgba(17,20,28,.58);
-      backdrop-filter: blur(9px);
+      z-index: 100;
       display: grid;
       place-items: center;
       padding: 20px;
-      z-index: 100;
+      background: rgba(16,18,25,.62);
+      backdrop-filter: blur(10px);
+
       opacity: 0;
+      visibility: hidden;
       pointer-events: none;
-      transition: opacity .2s ease;
+
+      transition:
+        opacity .22s ease,
+        visibility .22s ease;
     }
 
     .overlay.show {
       opacity: 1;
+      visibility: visible;
       pointer-events: auto;
     }
 
     .modal {
       position: relative;
-      width: min(920px, 100%);
+      width: min(940px, 100%);
       max-height: 94vh;
       overflow-y: auto;
-      background: white;
-      border-radius: 28px;
-      padding: 36px;
-      box-shadow: 0 35px 100px rgba(0,0,0,.28);
-      transform: translateY(15px) scale(.98);
-      transition: .2s ease;
+      padding: 38px;
+      background: #fff;
+      border-radius: 29px;
+      box-shadow: 0 40px 120px rgba(0,0,0,.3);
+
+      transform: translateY(20px) scale(.97);
+      transition: transform .22s ease;
     }
 
     .overlay.show .modal {
@@ -300,76 +339,84 @@
       position: absolute;
       top: 18px;
       right: 18px;
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
+      width: 39px;
+      height: 39px;
       border: 1px solid var(--border);
-      background: white;
-      cursor: pointer;
-      font-size: 19px;
+      border-radius: 50%;
+      background: #fff;
       color: var(--muted);
-    }
-
-    .lock {
-      width: 54px;
-      height: 54px;
-      margin: 0 auto 16px;
-      border-radius: 16px;
-      display: grid;
-      place-items: center;
-      background: rgba(108,92,231,.10);
-      font-size: 25px;
+      cursor: pointer;
+      font-size: 20px;
     }
 
     .modal-head {
       text-align: center;
-      padding: 0 30px;
+    }
+
+    .lock {
+      width: 58px;
+      height: 58px;
+      margin: 0 auto 17px;
+      display: grid;
+      place-items: center;
+      border-radius: 17px;
+      background: rgba(99,91,255,.1);
+      font-size: 26px;
     }
 
     .modal-head h2 {
-      font-size: 30px;
-      letter-spacing: -.03em;
+      font-size: 31px;
+      letter-spacing: -.035em;
     }
 
     .modal-head p {
+      max-width: 580px;
       margin: 10px auto 0;
       color: var(--muted);
-      max-width: 600px;
-      line-height: 1.5;
+      line-height: 1.55;
+    }
+
+    .result-preview {
+      margin-top: 17px;
+      display: flex;
+      justify-content: center;
     }
 
     .blur-result {
-      display: inline-block;
-      margin-top: 15px;
-      padding: 8px 15px;
-      border-radius: 10px;
-      background: #f2f3f6;
-      filter: blur(5px);
+      position: relative;
+      min-width: 150px;
+      padding: 10px 22px;
+      border-radius: 12px;
+      background: #f1f2f5;
+      font-size: 25px;
+      font-weight: 850;
+      filter: blur(6px);
       user-select: none;
-      font-size: 22px;
-      font-weight: 800;
     }
 
+    /* PLANS */
+
     .plans {
-      margin-top: 30px;
+      margin-top: 32px;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
+      gap: 15px;
     }
 
     .plan {
       position: relative;
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 22px;
+      min-height: 330px;
+      padding: 23px;
       display: flex;
       flex-direction: column;
-      min-height: 310px;
+      border: 1px solid var(--border);
+      border-radius: 21px;
+      background: #fff;
     }
 
     .plan.popular {
       border: 2px solid var(--primary);
-      box-shadow: 0 12px 35px rgba(108,92,231,.12);
+      box-shadow: 0 15px 40px rgba(99,91,255,.12);
     }
 
     .popular-tag {
@@ -377,136 +424,160 @@
       top: -12px;
       left: 50%;
       transform: translateX(-50%);
-      white-space: nowrap;
-      padding: 5px 10px;
+      padding: 5px 11px;
       border-radius: 999px;
-      color: white;
+      color: #fff;
       background: var(--primary);
       font-size: 10px;
       font-weight: 900;
-      letter-spacing: .06em;
+      letter-spacing: .07em;
+      white-space: nowrap;
     }
 
-    .plan h3 {
+    .plan-name {
       font-size: 18px;
+      font-weight: 800;
     }
 
     .price {
-      margin: 12px 0 18px;
-      font-size: 30px;
-      font-weight: 800;
-      letter-spacing: -.04em;
+      margin: 13px 0 19px;
+      font-size: 31px;
+      font-weight: 850;
+      letter-spacing: -.045em;
     }
 
     .price span {
+      color: var(--muted);
       font-size: 12px;
       font-weight: 500;
-      color: var(--muted);
       letter-spacing: 0;
     }
 
     .plan ul {
-      list-style: none;
+      margin-bottom: 22px;
       display: grid;
-      gap: 10px;
-      margin-bottom: 20px;
-      color: #565d69;
+      gap: 11px;
+      list-style: none;
+      color: #555c69;
       font-size: 13px;
       line-height: 1.4;
     }
 
     .plan li::before {
       content: "✓";
+      margin-right: 8px;
       color: var(--success);
       font-weight: 900;
-      margin-right: 8px;
     }
 
     .subscribe {
+      width: 100%;
+      height: 46px;
       margin-top: auto;
-      height: 45px;
-      border-radius: 12px;
       border: 1px solid var(--border);
-      background: white;
+      border-radius: 12px;
+      background: #fff;
+      color: var(--text);
       cursor: pointer;
       font-weight: 750;
-      transition: .15s;
+      transition: .15s ease;
     }
 
     .subscribe:hover {
-      background: #f5f6f8;
+      background: #f4f5f7;
     }
 
     .popular .subscribe {
+      color: #fff;
       background: var(--primary);
       border-color: var(--primary);
-      color: white;
+    }
+
+    .popular .subscribe:hover {
+      background: var(--primary-dark);
     }
 
     .disclaimer {
-      margin-top: 24px;
+      margin-top: 25px;
       text-align: center;
-      color: #9a9faa;
+      color: #9da2ad;
       font-size: 11px;
-      line-height: 1.5;
+      line-height: 1.6;
     }
 
-    /* SECOND JOKE MODAL */
+    /* SECOND MODAL */
 
     .joke-overlay {
       position: fixed;
       inset: 0;
       z-index: 200;
-      background: rgba(17,20,28,.65);
-      display: none;
+      display: grid;
       place-items: center;
       padding: 20px;
+      background: rgba(16,18,25,.7);
+      backdrop-filter: blur(10px);
+
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: .2s ease;
     }
 
     .joke-overlay.show {
-      display: grid;
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
     }
 
     .joke-box {
-      width: min(430px, 100%);
-      background: white;
-      border-radius: 24px;
-      padding: 32px;
+      width: min(440px, 100%);
+      padding: 34px;
+      border-radius: 25px;
+      background: #fff;
       text-align: center;
       box-shadow: var(--shadow);
+      transform: scale(.96);
+      transition: .2s ease;
     }
 
-    .joke-box .emoji {
-      font-size: 46px;
+    .joke-overlay.show .joke-box {
+      transform: scale(1);
+    }
+
+    .joke-emoji {
+      font-size: 48px;
     }
 
     .joke-box h3 {
-      margin-top: 14px;
-      font-size: 24px;
+      margin-top: 15px;
+      font-size: 25px;
+      letter-spacing: -.025em;
     }
 
     .joke-box p {
+      margin-top: 11px;
       color: var(--muted);
-      line-height: 1.6;
-      margin-top: 10px;
+      line-height: 1.65;
     }
 
     .joke-box button {
-      margin-top: 22px;
       width: 100%;
-      height: 48px;
+      height: 49px;
+      margin-top: 23px;
       border: 0;
       border-radius: 13px;
+      color: #fff;
       background: var(--primary);
-      color: white;
-      font-weight: 750;
       cursor: pointer;
+      font-weight: 750;
     }
 
-    @media (max-width: 850px) {
+    /* RESPONSIVE */
+
+    @media (max-width: 880px) {
       .hero {
         grid-template-columns: 1fr;
-        gap: 40px;
+        gap: 42px;
       }
 
       .intro {
@@ -523,8 +594,8 @@
       }
 
       .calculator {
-        max-width: 430px;
-        margin: auto;
+        max-width: 440px;
+        margin: 0 auto;
       }
 
       .plans {
@@ -538,42 +609,67 @@
 
     @media (max-width: 520px) {
       header {
-        padding-top: 16px;
+        padding: 16px 0;
+      }
+
+      .header-status {
+        display: none;
+      }
+
+      main {
+        padding-top: 15px;
+      }
+
+      .hero {
+        gap: 28px;
       }
 
       .intro h1 {
-        font-size: 42px;
+        font-size: 43px;
       }
 
       .intro p {
+        margin-top: 17px;
         font-size: 15px;
+      }
+
+      .features {
+        margin-top: 19px;
       }
 
       .calculator {
         padding: 12px;
-        border-radius: 22px;
+        border-radius: 23px;
       }
 
       .display {
-        min-height: 110px;
+        min-height: 112px;
+      }
+
+      .display-value {
+        font-size: 37px;
       }
 
       .key {
-        height: 58px;
+        height: 59px;
         border-radius: 14px;
       }
 
       .modal {
-        padding: 30px 16px 22px;
-        border-radius: 22px;
+        padding: 31px 16px 23px;
+        border-radius: 23px;
+      }
+
+      .modal-head {
+        padding: 0 15px;
       }
 
       .modal-head h2 {
         font-size: 24px;
       }
 
-      .modal-head {
-        padding: 0 20px;
+      .plans {
+        margin-top: 28px;
       }
     }
   </style>
@@ -586,11 +682,12 @@
   <header>
     <div class="brand">
       <div class="brand-icon">÷</div>
-      Calculadora Premium™
+      <span>Calculadora Online</span>
     </div>
 
-    <div class="premium-badge">
-      FREE
+    <div class="header-status">
+      <span class="status-dot"></span>
+      Pronta para uso
     </div>
   </header>
 
@@ -599,39 +696,40 @@
 
       <div class="intro">
         <h1>
-          Matemática.<br>
-          Agora por <span>assinatura.</span>
+          Calculadora<br>
+          <span>Online</span>
         </h1>
 
         <p>
-          A primeira calculadora criada para transformar operações
-          matemáticas simples em receita recorrente.
+          Faça seus cálculos de forma simples, rápida e prática.
+          Digite uma operação ou utilize o teclado da calculadora.
         </p>
 
         <div class="features">
-          <div class="feature">✓ Digitação grátis</div>
-          <div class="feature">✓ Interface premium</div>
-          <div class="feature">🔒 Resultado pago</div>
+          <div class="feature">✓ Rápida</div>
+          <div class="feature">✓ Fácil de usar</div>
+          <div class="feature">✓ Funciona no celular</div>
         </div>
       </div>
 
       <div class="calculator">
 
         <div class="calculator-top">
-          <span>Calculadora</span>
+          <strong>Calculadora</strong>
 
-          <div class="free-plan">
-            <span class="dot"></span>
-            Plano Gratuito
+          <div class="ready">
+            Pronta para calcular
           </div>
         </div>
 
         <div class="display">
-          <div class="expression" id="expression">
+          <div class="expression-label" id="expressionLabel">
             Digite uma operação
           </div>
 
-          <div class="value" id="display">0</div>
+          <div class="display-value" id="display">
+            0
+          </div>
         </div>
 
         <div class="keyboard">
@@ -668,13 +766,16 @@
   </main>
 
   <footer>
-    Calculadora Premium™ © 2026 — Projeto humorístico. Nenhuma cobrança é realizada.
+    Calculadora Online © 2026
   </footer>
 
 </div>
 
 
+<!-- ============================= -->
 <!-- PAYWALL -->
+<!-- ============================= -->
+
 <div class="overlay" id="paywall">
 
   <div class="modal">
@@ -688,21 +789,28 @@
       <h2>Seu resultado está pronto!</h2>
 
       <p>
-        Encontramos a resposta para sua operação.
-        Faça upgrade para desbloquear o resultado.
+        O cálculo foi concluído com sucesso.
+        Escolha um plano para desbloquear e visualizar o resultado.
       </p>
 
-      <div class="blur-result" id="fakeResult">
-        123.456
+      <div class="result-preview">
+        <div class="blur-result" id="fakeResult">
+          123.456
+        </div>
       </div>
 
     </div>
 
+
     <div class="plans">
+
+      <!-- BASIC -->
 
       <div class="plan">
 
-        <h3>Basic</h3>
+        <div class="plan-name">
+          Basic
+        </div>
 
         <div class="price">
           R$ 9,90
@@ -713,15 +821,20 @@
           <li>10 resultados por mês</li>
           <li>Adição e subtração</li>
           <li>Até 4 casas decimais</li>
-          <li>Anúncios premium</li>
+          <li>Histórico de 3 cálculos</li>
         </ul>
 
-        <button class="subscribe" data-plan="Basic">
+        <button
+          class="subscribe"
+          data-plan="Basic"
+        >
           Assinar Basic
         </button>
 
       </div>
 
+
+      <!-- PRO -->
 
       <div class="plan popular">
 
@@ -729,7 +842,9 @@
           MAIS POPULAR
         </div>
 
-        <h3>Pro</h3>
+        <div class="plan-name">
+          Pro
+        </div>
 
         <div class="price">
           R$ 29,90
@@ -740,19 +855,27 @@
           <li>Resultados ilimitados*</li>
           <li>Multiplicação desbloqueada</li>
           <li>Porcentagem profissional</li>
-          <li>Prioridade nos cálculos</li>
+          <li>Resultados com prioridade</li>
+          <li>Até 8 casas decimais</li>
         </ul>
 
-        <button class="subscribe" data-plan="Pro">
+        <button
+          class="subscribe"
+          data-plan="Pro"
+        >
           Assinar Pro
         </button>
 
       </div>
 
 
+      <!-- BUSINESS -->
+
       <div class="plan">
 
-        <h3>Business</h3>
+        <div class="plan-name">
+          Business
+        </div>
 
         <div class="price">
           R$ 79,90
@@ -762,11 +885,15 @@
         <ul>
           <li>Divisão desbloqueada</li>
           <li>Raiz quadrada</li>
+          <li>Resultados instantâneos</li>
           <li>Modo escuro</li>
           <li>Suporte matemático 24/7</li>
         </ul>
 
-        <button class="subscribe" data-plan="Business">
+        <button
+          class="subscribe"
+          data-plan="Business"
+        >
           Assinar Business
         </button>
 
@@ -774,31 +901,39 @@
 
     </div>
 
+
     <div class="disclaimer">
-      * Uso justo de matemática se aplica.<br>
-      Projeto humorístico/paródia. Nenhum pagamento ou cobrança é processado.
+      * Política de uso justo de matemática aplicável.<br>
+      Este site é uma paródia/projeto humorístico.
+      Nenhuma assinatura ou cobrança real é realizada.
     </div>
 
   </div>
-
 </div>
 
 
+<!-- ============================= -->
 <!-- SEGUNDA PIADA -->
+<!-- ============================= -->
+
 <div class="joke-overlay" id="jokeOverlay">
 
   <div class="joke-box">
 
-    <div class="emoji">💳</div>
+    <div class="joke-emoji">
+      💳
+    </div>
 
-    <h3>Excelente escolha!</h3>
+    <h3>
+      Excelente escolha!
+    </h3>
 
     <p id="jokeText">
       Preparando sua assinatura...
     </p>
 
     <button id="jokeClose">
-      Continuar sem ficar rico
+      Continuar
     </button>
 
   </div>
@@ -808,20 +943,41 @@
 
 <script>
 
-  const display = document.getElementById("display");
-  const expressionText = document.getElementById("expression");
+  /* ============================= */
+  /* ELEMENTOS */
+  /* ============================= */
 
-  const paywall = document.getElementById("paywall");
-  const closePaywall = document.getElementById("closePaywall");
+  const display =
+    document.getElementById("display");
 
-  const fakeResult = document.getElementById("fakeResult");
+  const expressionLabel =
+    document.getElementById("expressionLabel");
 
-  const jokeOverlay = document.getElementById("jokeOverlay");
-  const jokeText = document.getElementById("jokeText");
-  const jokeClose = document.getElementById("jokeClose");
+  const paywall =
+    document.getElementById("paywall");
+
+  const closePaywall =
+    document.getElementById("closePaywall");
+
+  const fakeResult =
+    document.getElementById("fakeResult");
+
+  const jokeOverlay =
+    document.getElementById("jokeOverlay");
+
+  const jokeText =
+    document.getElementById("jokeText");
+
+  const jokeClose =
+    document.getElementById("jokeClose");
+
 
   let expression = "";
 
+
+  /* ============================= */
+  /* FORMATAÇÃO */
+  /* ============================= */
 
   function formatExpression(value) {
 
@@ -839,17 +995,26 @@
     if (!expression) {
 
       display.textContent = "0";
-      expressionText.textContent = "Digite uma operação";
+
+      expressionLabel.textContent =
+        "Digite uma operação";
 
       return;
 
     }
 
-    display.textContent = formatExpression(expression);
-    expressionText.textContent = "Operação em andamento";
+    display.textContent =
+      formatExpression(expression);
+
+    expressionLabel.textContent =
+      "Operação";
 
   }
 
+
+  /* ============================= */
+  /* CALCULADORA */
+  /* ============================= */
 
   function appendValue(value) {
 
@@ -871,49 +1036,96 @@
 
   function backspace() {
 
-    expression = expression.slice(0, -1);
+    expression =
+      expression.slice(0, -1);
 
     updateDisplay();
 
   }
 
 
-  function showPaywall() {
+  /* ============================= */
+  /* RESULTADO */
+  /* ============================= */
 
-    if (!expression.trim()) return;
-
-    /*
-      O resultado é calculado apenas para gerar o efeito
-      visual borrado.
-
-      Ele NÃO é exibido ao usuário.
-    */
+  function calculateRealResult() {
 
     let result = "42";
 
     try {
 
-      const safeExpression = expression.replace(/%/g, "/100");
+      let safeExpression =
+        expression.replace(/%/g, "/100");
 
-      if (/^[0-9+\-*/().\s]+$/.test(safeExpression)) {
+      /*
+        Somente caracteres matemáticos simples
+        são permitidos.
+      */
+
+      if (
+        /^[0-9+\-*/().\s]+$/.test(
+          safeExpression
+        )
+      ) {
 
         result = Function(
-          '"use strict"; return (' + safeExpression + ')'
+          '"use strict"; return (' +
+          safeExpression +
+          ')'
         )();
 
       }
 
-    } catch (error) {
+      if (
+        result === undefined ||
+        result === null ||
+        Number.isNaN(result)
+      ) {
 
-      result = "ERRO";
+        result = "Erro";
+
+      }
 
     }
 
-    fakeResult.textContent = result;
+    catch (error) {
+
+      result = "Erro";
+
+    }
+
+    return result;
+
+  }
+
+
+  /* ============================= */
+  /* SURPRESA */
+  /* ============================= */
+
+  function showPaywall() {
+
+    if (!expression.trim()) {
+
+      return;
+
+    }
+
+    const result =
+      calculateRealResult();
+
+    /*
+      O resultado existe,
+      mas fica borrado.
+    */
+
+    fakeResult.textContent =
+      result;
 
     paywall.classList.add("show");
 
-    document.body.style.overflow = "hidden";
+    document.body.style.overflow =
+      "hidden";
 
   }
 
@@ -927,116 +1139,204 @@
   }
 
 
-  document.querySelectorAll(".key").forEach(button => {
+  /* ============================= */
+  /* BOTÕES */
+  /* ============================= */
 
-    button.addEventListener("click", () => {
+  document
+    .querySelectorAll(".key")
+    .forEach(button => {
 
-      const value = button.dataset.value;
-      const action = button.dataset.action;
+      button.addEventListener(
+        "click",
+        () => {
 
-      if (value !== undefined) {
+          const value =
+            button.dataset.value;
 
-        appendValue(value);
+          const action =
+            button.dataset.action;
+
+
+          if (value !== undefined) {
+
+            appendValue(value);
+
+          }
+
+
+          if (action === "clear") {
+
+            clearCalculator();
+
+          }
+
+
+          if (
+            action === "backspace"
+          ) {
+
+            backspace();
+
+          }
+
+
+          if (
+            action === "calculate"
+          ) {
+
+            showPaywall();
+
+          }
+
+        }
+      );
+
+    });
+
+
+  /* ============================= */
+  /* TECLADO */
+  /* ============================= */
+
+  document.addEventListener(
+    "keydown",
+    event => {
+
+      const allowedKeys =
+        "0123456789+-*/.%()";
+
+
+      if (
+        allowedKeys.includes(
+          event.key
+        )
+      ) {
+
+        appendValue(event.key);
 
       }
 
-      if (action === "clear") {
 
-        clearCalculator();
+      if (
+        event.key === "Enter" ||
+        event.key === "="
+      ) {
 
-      }
-
-      if (action === "backspace") {
-
-        backspace();
-
-      }
-
-      if (action === "calculate") {
+        event.preventDefault();
 
         showPaywall();
 
       }
 
+
+      if (
+        event.key === "Backspace"
+      ) {
+
+        event.preventDefault();
+
+        backspace();
+
+      }
+
+
+      if (
+        event.key === "Delete"
+      ) {
+
+        clearCalculator();
+
+      }
+
+
+      if (
+        event.key === "Escape"
+      ) {
+
+        hidePaywall();
+
+        jokeOverlay.classList.remove(
+          "show"
+        );
+
+      }
+
+    }
+  );
+
+
+  /* ============================= */
+  /* FECHAR PAYWALL */
+  /* ============================= */
+
+  closePaywall.addEventListener(
+    "click",
+    hidePaywall
+  );
+
+
+  paywall.addEventListener(
+    "click",
+    event => {
+
+      if (
+        event.target === paywall
+      ) {
+
+        hidePaywall();
+
+      }
+
+    }
+  );
+
+
+  /* ============================= */
+  /* "ASSINATURA" */
+  /* ============================= */
+
+  document
+    .querySelectorAll(".subscribe")
+    .forEach(button => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          const plan =
+            button.dataset.plan;
+
+
+          jokeText.innerHTML =
+
+            `Você escolheu o plano <strong>${plan}</strong>.` +
+
+            `<br><br>` +
+
+            `Infelizmente, nosso sistema de pagamentos também exige uma assinatura premium.`;
+
+
+          jokeOverlay.classList.add(
+            "show"
+          );
+
+        }
+      );
+
     });
 
-  });
 
+  jokeClose.addEventListener(
+    "click",
+    () => {
 
-  document.addEventListener("keydown", event => {
-
-    const allowedKeys =
-      "0123456789+-*/.%()";
-
-    if (allowedKeys.includes(event.key)) {
-
-      expression += event.key;
-
-      updateDisplay();
+      jokeOverlay.classList.remove(
+        "show"
+      );
 
     }
-
-    if (event.key === "Enter") {
-
-      event.preventDefault();
-
-      showPaywall();
-
-    }
-
-    if (event.key === "Backspace") {
-
-      backspace();
-
-    }
-
-    if (event.key === "Escape") {
-
-      hidePaywall();
-
-      jokeOverlay.classList.remove("show");
-
-    }
-
-  });
-
-
-  closePaywall.addEventListener("click", hidePaywall);
-
-
-  paywall.addEventListener("click", event => {
-
-    if (event.target === paywall) {
-
-      hidePaywall();
-
-    }
-
-  });
-
-
-  document.querySelectorAll(".subscribe").forEach(button => {
-
-    button.addEventListener("click", () => {
-
-      const plan = button.dataset.plan;
-
-      jokeText.innerHTML =
-        `Você escolheu o plano <strong>${plan}</strong>.<br><br>` +
-        `Infelizmente nosso sistema de pagamentos também exige uma assinatura premium.`;
-
-      jokeOverlay.classList.add("show");
-
-    });
-
-  });
-
-
-  jokeClose.addEventListener("click", () => {
-
-    jokeOverlay.classList.remove("show");
-
-  });
+  );
 
 </script>
 
